@@ -47,24 +47,24 @@ function stop() {
 
 //trivia questions array
   var questions = [{
-    question: "How old am I- ",
-    choices: [12, 14, 18, 19],
+    question: "Who does Michael accidentally hit with his car in the parking lot?",
+    choices: ["Phyllis", "Kelly", "Jim", "Meridith"],
     correctAnswer: 3
   }, {
-    question: "What color is my hair- ",
-    choices: ["brown", "red", "green", "black"],
+    question: "What's in the giant pot that Kevin drops all over the office floor?",
+    choices: ["Chili", "Gravy", "Bolognese", "Soup"],
     correctAnswer: 0
   }, {
-    question: "What size shoe do I wear- ",
-    choices: [5, 6, 7, 8],
+    question: "What does Michael pick as his username when he signs up for an online dating site?",
+    choices: ["TheBoss", "Cuddler", "LittleKidLover", "BiggestB"],
     correctAnswer: 2
   }, {
-    question: "Where was I born- ",
-    choices: ["cleveland", "fremont", "NYC", "florida"],
+    question: "Which country does Toby move to when he leaves his job at Dunder Mifflin, only to return later?",
+    choices: ["Alabama", "Jamaica", "Costa Rica", "Cuba"],
     correctAnswer: 2
   }, {
-    question: "How many siblings do I have- ",
-    choices: [1, 2, 3, 4],
+    question: " What is the name of Angela's cat, which Dwight kills by putting it in the freezer?",
+    choices: ["Flowers", "Bandit", "Tinkerbell", "Sprinkles"],
     correctAnswer: 3
   }];
 
@@ -102,17 +102,18 @@ function nextQuestion() {
 };
 
 //addId to each button 
+var docWins = $(".win");
 var win = 0
 var lose = 0
 
- $(document).on("click", '.choices', function trackStats() {
+ $(document).on("click", '.choices', function () {
   if(this.getAttribute('data-value') === 'correct') {
     win++;
     console.log("win");
   }
   else if(this.getAttribute('data-value') === 'wrong') {
     lose++;
-    console.log(lose);
+    console.log("lose");
   }
   
   //add if else conditions to check if data value = wrong or right answer 
@@ -126,6 +127,7 @@ var lose = 0
   $('.stats').show();
   $('#startOver').show();
   $("#show-number").hide();
+  stop();
 });
 
 $("#startOver").on("click", function() {
@@ -133,9 +135,9 @@ $("#startOver").on("click", function() {
   $(".question").show();
   $('#startOver').hide();
   $("#show-number").show();
-  run();
   $('.stats').hide();
   $("#done").show();
+  run();
 });
 //disable the button if the user 
 
