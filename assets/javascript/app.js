@@ -1,49 +1,6 @@
-  $( document ).ready(function() {
-     $('#startOver').hide();
-     $('#done').hide();
-     $('.stats').hide();
 
-});
 
-  // Click handler for the 'Start' button
-  $("#start").on("click", function(event) {
-    //hide startOver button
-    $('#start').hide();
-    //dislay timer 
-    run();
-    // display Question
-    nextQuestion();
-    $('#done').show();
-  });
-  
-  //global variables 
-  // var selections = []; //Array containing user choices 
-  // var userGuess;  
-  var number = 100;
-  var intervalId
-  // var questionCounter = 0;
 
-//timer
-//  $("#stop").on("click", stop);
-// $("#resume").on("click", run);
-
-function run() {
-      clearInterval(intervalId);
-      intervalId = setInterval(decrement, 1000);
-    }
-
- function decrement() {
-number--;
-$("#show-number").html("<h2>" + number + "</h2>");
-  if (number === 0) {
-    stop();
-    alert("time up");
-  }
-}
-
-function stop() {
-  clearInterval(intervalId);
-}
 
 //trivia questions array
   var questions = [{
@@ -68,126 +25,136 @@ function stop() {
     correctAnswer: 3
   }];
 
+  var timer
+  //game function 
+    var game = {
+    win: 0,
+    lose: 0,
 
-// var question = $("#question")
-// var options = $("#options")
+    questionsRight: 0,
+    correctAnswers: [],
+    timeRemaining: 100,
 
-
-function nextQuestion() {
-  // $("#question").append(questions.choices)
-  console.log(nextQuestion);
-    for (var i = 0; i < questions.length; i++) {
-      var div = $("<div class= 'question'>" ); 
-      div.text(questions[i].question);
-     $("#question").append(div);
-     // $("#question").append(questions[i].choices);
-     addAnswers();
-
-     function addAnswers(answers) {
-           for (var j = 0; j < questions[j].choices.length; j++) {          
-                 var button = $("<button class= 'choices'>");
-                 button.text(questions[i].choices[j]); 
-                 if (j === questions[i].correctAnswer) {
-                  button.attr('data-value', 'correct');
-                 }   
-                 else {
-                  button.attr('data-value', 'wrong');    
-                 }                      
-                 $("#question").append(button);
-
-            };
-        };
-
-    };
-};
-
-//addId to each button 
-var docWins = $(".win");
-var win = 0
-var lose = 0
-
- $(document).on("click", '.choices', function () {
-  if(this.getAttribute('data-value') === 'correct') {
-    win++;
-    console.log("win");
+    startTimer: function() {
+      clearInterval(timer)
+      timer = setInterval(decrement, 1000);
+    },
+    resetTimer: function() {
+      clearInterval(timer)
+    },
+    start: function() {
+      game.reset()
+      game.startTimer()
+    },
+    reset: function() {
+      game.resetTimer();
+      game.questionsRight = 0;
+      game.correctAnswers = [];
+      game.timeRemaining = 100;
+    }
   }
-  else if(this.getAttribute('data-value') === 'wrong') {
-    lose++;
-    console.log("lose");
+
+  $( document ).ready(function() {
+     $('#startOver').hide();
+     $('#done').hide();
+     $('.stats').hide();
+
+});
+
+  // Click handler for the 'Start' button
+  $("#start-button").on("click", function(event) {
+    game.start()
+    $('#start-button').hide();
+    //dislay timer
+    // display Question
+    buildQuestions();
+    $('#done').show();
+  });
+
+function decrement() {
+  game.timeRemaining--;
+  $("#show-number").html("<h2>" + game.timeRemaining + "</h2>");
+  if (game.timeRemaining === 0) {
+    alert("Time's up!");
+    game.lose++
+    gameOver();
   }
-  
-  //add if else conditions to check if data value = wrong or right answer 
- });
+}
 
+ $(document).on("click", '.choices', function trackStats() {
+  if(this.getAttribute('data-value') === 'correct' && !game.correctAnswers.includes($(this).text())) {
+    game.correctAnswers.push($(this).text());
+    game.questionsRight++;
+  } else if (game.correctAnswers.includes($(this).text())) {
+    game.questionsRight--;
+  }
+})
 
- $("#done").on("click", function() {
+$('#startOver').on('click', function() {
+  newGame();
+});
+
+$('#done').on('click', function() {
+  if (game.questionsRight === questions.length) {
+    game.win++
+  } else {
+    game.lose++
+  }
+  gameOver()
+});
+
+function gameOver() {
+  game.reset();
+  $('#win-count').text('win ' + game.win);
+  $('#lose-count').text('lose ' + game.lose);
   $("#done").hide();
   $(".choices").hide();
   $(".question").hide();
   $('.stats').show();
   $('#startOver').show();
   $("#show-number").hide();
-  stop();
-});
+}
 
-$("#startOver").on("click", function() {
+function newGame() {
+  game.start();
   $(".choices").show();
   $(".question").show();
   $('#startOver').hide();
   $("#show-number").show();
   $('.stats').hide();
   $("#done").show();
-  run();
-});
-//disable the button if the user 
-
-// if question.choices
-
-//if (userguess === 0) {
-  // stop();
-  //hide questions
-  // show user stats 
-  //start over button 
-//}
-
-  //question format
-  // function question() {
-    //show question 
-    //choices in list format
-    //along with radio button
-    //show timer 45sec for each question displayed 
-  // }
-  //function to move from question to question
-  // function displayNext() {
-  //   if (userGuess === true) {
-  //     track user guess to display at the end
-  //     else (user === false)
-  //       track user guess to display at the end 
-
-  //   }
-  // }
-
-//when player has answered all questions show right answers/wrong answers and start over button
-  //function startover() {
-
-  //}
-
-// var questionId = -1;
-// function nextQuestion() {
-//   // Check my answer for current question
-//   if(questionId >= 0) {
-//     // if(userGuess === correct)
-//     //    play happy animation
-//     // else
-//     //    play sad
-//   }
-//   // Go to the next question after a few seconds...
-//   questionId++;
-//   // Load question[questionId] (initially load question[0] )
-// };
+}
 
 
 
+
+
+
+
+function buildQuestions() {
+  for (var i = 0; i < questions.length; i++) {
+    var div = $("<div class='question'>" );
+    div.text(questions[i].question);
+    $("#question").append(div);
+    addAnswers();
+
+   function addAnswers() {
+     for (var j = 0; j < questions[j].choices.length; j++) {
+       var button = $("<button class='choices'>");
+       button.text(questions[i].choices[j]);
+       if (j === questions[i].correctAnswer) {
+        button.attr('data-value', 'correct');
+       }
+       else {
+        button.attr('data-value', 'wrong');
+       }
+       $("#question").append(button);
+
+      };
+      };
+
+  };
+};
 
 
 

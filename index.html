@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Trivia Game</title>
-	<!-- Bootstrap File -->
+  <title>Trivia Game</title>
+  <!-- Bootstrap File -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery.js"></script>
@@ -13,39 +13,41 @@
 
 <body>
     <!-- Main Content -->
-	<header>
-      <h1>Trivia Game</h1>     
+  <header>
+      <h1>Trivia Game</h1>
     </header>
     <br>
     <div class="container">
 
-      	<section id="title">
-        	<h2>Trivia Game</h2>
-      	</section>
+        <section id="title">
+          <h2>Trivia Game</h2>
+        </section>
 
-      		<br>
+          <br>
 
-    		<button class='button' id='start'> <a href='#'>Start</a></button>
-    		<button class='button' id='startOver'> <a href='#'>Start Over</a></button>
-      
+        <button class='button' id='start-button'> <a href='#'>Start</a></button>
+        <button class='button' id='startOver'> <a href='#'>Start Over</a></button>
+
 
       <div id="show-number"></div>
           <!-- <button id="stop">Stop</button>
           <button id="resume">Resume</button> -->
-      <div id= "game">
-        <div id= "question"></div>
-        <div id= "options"></div>
-      </div> 
-      <div >
-        <button id= "done"><a href='#'>Done</a></button>
+      <div id="game">
+        <div id="question"></div>
+        <div id="options"></div>
       </div>
-      <div class= "stats">
+      <br>
+      <br>
+      <div >
+        <button id="done"><a href='#'>Done</a></button>
+      </div>
+      <div class="stats">
         <p>Status</p>
-            <p>Win 0</p>
-            <p>lose 0</p>
+            <p id='win-count'>Win 0</p>
+            <p id="lose-count">lose 0</p>
       </div>
 
-  	</div>
+    </div>
 </body>
 
 
